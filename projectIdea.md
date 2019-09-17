@@ -1,7 +1,8 @@
-## Ticktofix
+# Ticktofix
 
-Executive Summary
-Ticktofix is a web application that will allow tenants, commercial or residential to submit repair tickets to the superintendents or building management for repairs and more. In the ticket, a client can submit a thorough description of their needs or problems. A superintendent or manager can login to Ticktofix to assign, update and close tickets. Crew members will complete work, add detail notes to their ticket, add their time. Another possibility, maybe for the future is the ability that client can comment, review, or even rate the work completed. 
+# Executive Summary
+
+  Ticktofix is a web application that will allow tenants, commercial or residential to submit repair tickets to the superintendents or building management for repairs and more. In the ticket, a client can submit a thorough description of their needs or problems. A superintendent or manager can login to Ticktofix to assign, update and close tickets. Crew members will complete work, add detail notes to their ticket, add their time. Another possibility, maybe for the future is the ability that client can comment, review, or even rate the work completed. 
 
 This idea came as we realize the many challenges we face as tenants to get a hold of a super and maintenance crew. Some of the issues: time, coordinating, lack of understanding, lack of accountability and more. A ticketing system helps clear such things out.
 
@@ -11,14 +12,14 @@ There are many ticketing systems out there, most are in areas of technical suppo
 
 
 
-User-types
+# User-types
 Supervisor receives and assigns jobs, confirms completion and closes tickets.
 Crew members receive assigned jobs, update tickets, complete ticket.
 Admin can manage the applications, review, print reports, manage efficiency, and more.
 Tenant can submit tickets, monitor progress, comment, exchange messages with crew members and crew lead(manager, super).
 Client: Building owners.
 
-User stories
+# User stories
 Admins: I want to control the user account access, assign permission to employees, like only supers can close tickets. 
 Client: I want to control spending, monitor efficiency, review ratings, assess maintenance crew effectiveness, finance, payment, contact support, and more.
 Tenant: I want to submit tickets for issues within my rental, schedule available time, see crew availability, comment, review and rate the repair.
