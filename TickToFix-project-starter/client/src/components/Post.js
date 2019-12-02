@@ -1,16 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Post({ content,apt, severity, status, createdAt, id }) {
+function Post({ title, content, userName, contactNum, apt, severity, status, createdAt, id }) {
   return (
     <div className="col-10 col-md-8 col-lg-7">
       <div className="card mb-4 shadow">
+        <div className="card-title">
+          <Link to={"/posts/" + id}>{title} Reported from {apt}
+          </Link>
+        </div>
         <div className="card-body card-text">
-          
-          <Link to={"/posts/"+id}>{ content } {apt} {severity} {status} </Link>
+          {content}{severity} {status}
         </div>
         <div className="card-footer small text-muted text-right">
-          { createdAt }
+          Reported at {createdAt}
         </div>
       </div>
     </div>
