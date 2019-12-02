@@ -5,11 +5,19 @@ class PostFormPage extends React.Component {
   state = {
     error: false,
     success: false,
+    title: '',
     content: '',
     userName: '',
+    contactNum: '',
     apt: '',
     severity: '',
     status: ''
+  }
+
+  titleChanged = (event) => {
+    this.setState({
+      title: event.target.value
+    });
   }
 
   contentChanged = (event) => {
@@ -21,6 +29,12 @@ class PostFormPage extends React.Component {
   nameChanged = (event) => {
     this.setState({
       userName: event.target.value
+    });
+  }
+
+  contactNumChanged = (event) => {
+    this.setState({
+      contactNum: event.target.value
     });
   }
 
@@ -37,7 +51,7 @@ class PostFormPage extends React.Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({content: this.state.content, userName: this.state.userName, apt: this.state.apt})
+      body: JSON.stringify({title: this.state.title, content: this.state.content, userName: this.state.userName, contactNum: this.state.contactNum, apt: this.state.apt})
     })
       .then(res => {
         if(res.ok) {
@@ -76,6 +90,13 @@ class PostFormPage extends React.Component {
         <div className="input-group">
           <input 
             type="text" 
+            placeholder="Add Ticket Title" 
+            value={this.state.title}
+            className="form-control mr-3 rounded"
+            onChange={this.titleChanged}
+          />
+          <input 
+            type="text" 
             placeholder="Add Issue details..." 
             value={this.state.content}
             className="form-control mr-3 rounded"
@@ -88,6 +109,13 @@ class PostFormPage extends React.Component {
             className="form-control mr-3 rounded"
             onChange={this.nameChanged}
           />
+          <input 
+            type="text" 
+            placeholder="Enter Phone Number" 
+            value={this.state.contactNum}
+            className="form-control mr-3 rounded"
+            onChange={this.contactNumChanged}
+          />
           
           <input 
             type="text" 
@@ -95,8 +123,7 @@ class PostFormPage extends React.Component {
             value={this.state.apt}
             className="form-control mr-3 rounded"
             onChange={this.aptChanged}
-          />
-          
+          />  
           <button className="btn btn-primary" onClick={this.savePost}>Save Post</button>
         </div>
       </div>
