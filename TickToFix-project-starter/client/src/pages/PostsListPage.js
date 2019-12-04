@@ -5,7 +5,7 @@ import Loading from '../components/Loading';
 
 class PostsListPage extends React.Component {
   state = {
-    posts: [],
+    posts: null,
     loading: true,
     ticketNum: '',
   }
@@ -32,10 +32,23 @@ class PostsListPage extends React.Component {
     });
   }
 
-  searchPost = (ticketNum) => {
-
+  searchPost = () => {
+    fetch("/api/posts/ticketNumber/"+this.state.ticketNum)
+      .then(res => res.json())
+      .then(posts => {
+        console.log(posts.id);
+        this.setState({
+          loading: false,
+          posts: <Post {...posts} key={posts.id} />,
+        });
+      })
+      .catch(err => console.log("API ERROR: ", err));
   }
 
+  updatePost = () => {
+    
+  }
+  
   render() {
     if (this.state.loading) {
       return <Loading />;
