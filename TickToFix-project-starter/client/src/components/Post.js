@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Post({ title, content, userName, contactNum, apt, severity, status, createdAt, id }) {
+function Post({ title, content, userName, contactNum, apt, severity, status, createdAt, updatedAt, id }) {
+  console.log(createdAt)
   return (
     <div className="col-10 col-md-8 col-lg-7">
       <div className="card mb-4 shadow">
@@ -13,7 +14,8 @@ function Post({ title, content, userName, contactNum, apt, severity, status, cre
           {content}{severity} {status}
         </div>
         <div className="card-footer small text-muted text-right">
-          Reported at {createdAt}
+          <div>Reported at {createdAt}</div>
+          <div>Updated at {updatedAt}</div>
         </div>
       </div>
     </div>
