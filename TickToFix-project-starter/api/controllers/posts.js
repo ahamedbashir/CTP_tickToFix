@@ -17,7 +17,7 @@ const { Post } = db;
 
 
 router.get('/', (req,res) => {
-  Post.findAll({})
+  Post.findAll({attributes: ['title', 'content', 'apt', 'userName', 'contactNum', 'severity', 'status', 'createdAt', 'updatedAt', 'id']})
     .then(posts => res.json(posts));
 });
 
@@ -46,6 +46,17 @@ router.get('/:id', (req, res) => {
       res.json(post);
     });
 });
+
+router.get('/ticketNumber/:ticketNum', (req, res) => {
+  const { ticketNum } = req.params;
+  Post.findOne({where: {ticketNum: ticketNum}})
+    .then(post => {
+      if(!post) {
+        return res.sendStatus(404);
+      }
+      res.json(post);
+    });
+})
 
 
 router.put('/:id', (req, res) => {
