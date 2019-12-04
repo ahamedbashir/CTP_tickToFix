@@ -11,7 +11,9 @@ class PostFormPage extends React.Component {
     contactNum: '',
     apt: '',
     severity: '',
-    status: ''
+    status: '',
+    ticketNum: '',
+    id: null
   }
 
   titleChanged = (event) => {
@@ -34,7 +36,7 @@ class PostFormPage extends React.Component {
 
   contactNumChanged = (event) => {
     this.setState({
-      contactNum: event.target.value
+      contactNum: event.target.value,
     });
   }
 
@@ -44,9 +46,40 @@ class PostFormPage extends React.Component {
     });
   }
 
-  savePost = (event) => {
+   savePost = (event) => {
     fetch("/api/posts/", {
       method: 'POST',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({title: this.state.title, content: this.state.content, userName: this.state.userName, contactNum: this.state.contactNum, apt: this.state.apt})
+    })
+      .then(res => {
+        if(res.ok) {
+          return res.json()
+        }
+
+        throw new Error('Content validation');
+      })
+      .then(post => {
+        this.setState({
+          success: true,
+          ticketNum: post.ticketNum,
+          id: post.id
+        });
+        console.log(post.ticketNum);
+      })
+      .catch(err => {
+        this.setState({
+          error: true,
+        });
+      });
+  }
+
+  updatePosts = (event) => {
+    fetch("/api/posts/id", {
+      method: 'PUT',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
@@ -73,7 +106,10 @@ class PostFormPage extends React.Component {
   }
 
   render() {
-    if(this.state.success) return <Redirect to="/" />;
+    if (this.state.success) return (<div>
+      <h1>Your Ticket # {this.state.ticketNum}</h1>
+      {/* <Redirect to={"/posts/" + this.state.id} /> */}
+    </div>);
 
     let errorMessage = null;
     if(this.state.error) {
