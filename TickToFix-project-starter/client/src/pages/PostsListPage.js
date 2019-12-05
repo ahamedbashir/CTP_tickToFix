@@ -1,6 +1,6 @@
 import React from 'react';
 import Post from '../components/Post';
-import SelectedPost from './SelectedPost';
+import SelectedPost from '../components/SelectedPost';
 import Loading from '../components/Loading';
 import { Redirect } from 'react-router-dom';
 
