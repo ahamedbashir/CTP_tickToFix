@@ -1,5 +1,7 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import Post from '../components/Post';
+import Loading from '../components/Loading';
 
 class PostFormPage extends React.Component {
   state = {
@@ -13,7 +15,8 @@ class PostFormPage extends React.Component {
     severity: '',
     status: '',
     ticketNum: '',
-    id: null
+    id: null,
+    post: null
   }
 
   titleChanged = (event) => {
@@ -46,17 +49,17 @@ class PostFormPage extends React.Component {
     });
   }
 
-   savePost = (event) => {
+  savePost = (event) => {
     fetch("/api/posts/", {
       method: 'POST',
       credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({title: this.state.title, content: this.state.content, userName: this.state.userName, contactNum: this.state.contactNum, apt: this.state.apt})
+      body: JSON.stringify({ title: this.state.title, content: this.state.content, userName: this.state.userName, contactNum: this.state.contactNum, apt: this.state.apt })
     })
       .then(res => {
-        if(res.ok) {
+        if (res.ok) {
           return res.json()
         }
 
@@ -66,7 +69,8 @@ class PostFormPage extends React.Component {
         this.setState({
           success: true,
           ticketNum: post.ticketNum,
-          id: post.id
+          id: post.id,
+          post: post
         });
         console.log(post.ticketNum);
       })
@@ -84,10 +88,10 @@ class PostFormPage extends React.Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({title: this.state.title, content: this.state.content, userName: this.state.userName, contactNum: this.state.contactNum, apt: this.state.apt})
+      body: JSON.stringify({ title: this.state.title, content: this.state.content, userName: this.state.userName, contactNum: this.state.contactNum, apt: this.state.apt })
     })
       .then(res => {
-        if(res.ok) {
+        if (res.ok) {
           return res.json()
         }
 
@@ -106,13 +110,18 @@ class PostFormPage extends React.Component {
   }
 
   render() {
-    if (this.state.success) return (<div>
-      <h1>Your Ticket # {this.state.ticketNum}</h1>
-      {/* <Redirect to={"/posts/" + this.state.id} /> */}
-    </div>);
+    if (this.state.success) {
+      return (
+        <div>
+          <div className="card">Your Ticket # {this.state.ticketNum}</div>
+          <Post {...this.state.post} />
+          <button className="card" style={{backgroundColor:'black', color: 'white'}} onClick={() => window.print()}> Print Ticket</button>
+          {/* <Redirect to={"/posts/" + this.state.id} /> */}
+        </div>);
+    }
 
     let errorMessage = null;
-    if(this.state.error) {
+    if (this.state.error) {
       errorMessage = (
         <div className="alert alert-danger">
           "There was an error saving this post."
@@ -122,44 +131,44 @@ class PostFormPage extends React.Component {
 
     return (
       <div className="col-10 col-md-8 col-lg-7">
-        { errorMessage }
+        {errorMessage}
         <div className="input-group">
-          <input 
-            type="text" 
-            placeholder="Add Ticket Title" 
+          <input
+            type="text"
+            placeholder="Add Ticket Title"
             value={this.state.title}
             className="form-control mr-3 rounded"
             onChange={this.titleChanged}
           />
-          <input 
-            type="text" 
-            placeholder="Add Issue details..." 
+          <input
+            type="text"
+            placeholder="Add Issue details..."
             value={this.state.content}
             className="form-control mr-3 rounded"
             onChange={this.contentChanged}
           />
-          <input 
-            type="text" 
-            placeholder="Enter your name" 
+          <input
+            type="text"
+            placeholder="Enter your name"
             value={this.state.userName}
             className="form-control mr-3 rounded"
             onChange={this.nameChanged}
           />
-          <input 
-            type="text" 
-            placeholder="Enter Phone Number" 
+          <input
+            type="text"
+            placeholder="Enter Phone Number"
             value={this.state.contactNum}
             className="form-control mr-3 rounded"
             onChange={this.contactNumChanged}
           />
-          
-          <input 
-            type="text" 
-            placeholder="Apartment Number" 
+
+          <input
+            type="text"
+            placeholder="Apartment Number"
             value={this.state.apt}
             className="form-control mr-3 rounded"
             onChange={this.aptChanged}
-          />  
+          />
           <button className="btn btn-primary" onClick={this.savePost}>Save Post</button>
         </div>
       </div>

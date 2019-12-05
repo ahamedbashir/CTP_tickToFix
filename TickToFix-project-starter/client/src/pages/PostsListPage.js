@@ -1,6 +1,8 @@
 import React from 'react';
 import Post from '../components/Post';
+import SelectedPost from './SelectedPost';
 import Loading from '../components/Loading';
+import { Redirect } from 'react-router-dom';
 
 
 class PostsListPage extends React.Component {
@@ -32,6 +34,61 @@ class PostsListPage extends React.Component {
     });
   }
 
+  deleteSearchedPost = (id) => {
+    fetch("/api/posts/"+id, {
+      method: 'DELETE',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+    })
+      .then(res => {
+        if (res.ok) {
+          this.setState({
+            posts: null,
+            ticketNum: null
+          })
+          return res.json();
+          return <Redirect to={"/posts/"} />
+        }
+
+        throw new Error('Content validation');
+      })
+      .catch(err => {
+        this.setState({
+          error: true,
+        });
+      });
+  }
+
+  updatePosts = (event) => {
+    fetch("/api/posts/id", {
+      method: 'PUT',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ title: this.state.title, content: this.state.content, userName: this.state.userName, contactNum: this.state.contactNum, apt: this.state.apt })
+    })
+      .then(res => {
+        if (res.ok) {
+          return res.json()
+        }
+
+        throw new Error('Content validation');
+      })
+      .then(post => {
+        this.setState({
+          success: true,
+        });
+      })
+      .catch(err => {
+        this.setState({
+          error: true,
+        });
+      });
+  }
+  
   searchPost = () => {
     fetch("/api/posts/ticketNumber/"+this.state.ticketNum)
       .then(res => res.json())
@@ -39,7 +96,9 @@ class PostsListPage extends React.Component {
         console.log(posts.id);
         this.setState({
           loading: false,
-          posts: <Post {...posts} key={posts.id} />,
+          id: posts.id,
+          // posts: <div><Post {...posts} key={posts.id} /> <button onClick={() => this.deleteSearchedPost(posts.id) }>delete</button></div>,
+          posts: <SelectedPost {...posts} key={posts.id} deleteTicket={this.deleteSearchedPost}/>
         });
       })
       .catch(err => console.log("API ERROR: ", err));
@@ -48,7 +107,7 @@ class PostsListPage extends React.Component {
   updatePost = () => {
     
   }
-  
+
   render() {
     if (this.state.loading) {
       return <Loading />;

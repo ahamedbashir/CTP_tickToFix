@@ -15,7 +15,7 @@ function Post({ title, content, userName, contactNum, apt, severity, status, cre
         </div>
         <div className="card-footer small text-muted text-right">
           <div>Reported at {createdAt}</div>
-          <div>Updated at {updatedAt}</div>
+          <div>Last Updated at {updatedAt}</div>
         </div>
       </div>
     </div>
