@@ -24,7 +24,7 @@ router.get('/', (req,res) => {
 
 router.post('/', (req, res) => {
   let {title, content, userName, contactNum, apt, severity, status } = req.body;
-
+  
   Post.create({title, content, userName, contactNum, apt, severity, status})
     .then(post => {
       res.status(201).json(post);
@@ -61,13 +61,36 @@ router.get('/ticketNumber/:ticketNum', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const { id } = req.params;
+  let {title, content, userName, contactNum, apt, severity, status } = req.body;
+
   Post.findByPk(id)
     .then(post => {
       if(!post) {
         return res.sendStatus(404);
       }
 
-      post.content = req.body.content;
+      if (title) {
+        post.title = title;
+      }
+      if (content) {
+        post.content = content;
+      }
+      if (userName) {
+        post.userName = userName;
+      }
+      if (contactNum) {
+        post.contactNum = contactNum;
+      }
+      if (apt) {
+        post.apt = apt;
+      }
+      if (severity) {
+        post.severity = severity;
+      }
+      if (status) {
+        post.status = status;
+      }
+
       post.save()
         .then(post => {
           res.json(post);
