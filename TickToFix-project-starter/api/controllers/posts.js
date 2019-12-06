@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const db = require('../models');
 const { Post } = db;
+const uuidv4 = require('uuidv4');
 
 // This is a simple example for providing basic CRUD routes for
 // a resource/model. It provides the following:
@@ -16,16 +17,16 @@ const { Post } = db;
 // TODO: Can you spot where we have some duplication below?
 
 
-router.get('/', (req,res) => {
-  Post.findAll({attributes: ['title', 'content', 'apt', 'userName', 'contactNum', 'severity', 'status', 'createdAt', 'updatedAt', 'id']})
+router.get('/', (req, res) => {
+  Post.findAll({ attributes: ['title', 'content', 'apt', 'userName', 'contactNum', 'severity', 'status', 'createdAt', 'updatedAt', 'id'] })
     .then(posts => res.json(posts));
 });
 
 
 router.post('/', (req, res) => {
-  let {title, content, userName, contactNum, apt, severity, status } = req.body;
-  
-  Post.create({title, content, userName, contactNum, apt, severity, status})
+  let { title, content, userName, contactNum, apt, severity, status } = req.body;
+
+  Post.create({ title, content, userName, contactNum, apt, severity, status })
     .then(post => {
       res.status(201).json(post);
     })
@@ -39,7 +40,7 @@ router.get('/:id', (req, res) => {
   const { id } = req.params;
   Post.findByPk(id)
     .then(post => {
-      if(!post) {
+      if (!post) {
         return res.sendStatus(404);
       }
 
@@ -49,9 +50,9 @@ router.get('/:id', (req, res) => {
 
 router.get('/ticketNumber/:ticketNum', (req, res) => {
   const { ticketNum } = req.params;
-  Post.findOne({where: {ticketNum: ticketNum}})
+  Post.findOne({ where: { ticketNum: ticketNum } })
     .then(post => {
-      if(!post) {
+      if (!post) {
         return res.sendStatus(404);
       }
       res.json(post);
@@ -61,11 +62,11 @@ router.get('/ticketNumber/:ticketNum', (req, res) => {
 
 router.put('/:id', (req, res) => {
   const { id } = req.params;
-  let {title, content, userName, contactNum, apt, severity, status } = req.body;
+  let { title, content, userName, contactNum, apt, severity, status } = req.body;
 
   Post.findByPk(id)
     .then(post => {
-      if(!post) {
+      if (!post) {
         return res.sendStatus(404);
       }
 
@@ -102,17 +103,24 @@ router.put('/:id', (req, res) => {
 });
 
 
-router.delete('/:id', (req, res) => {
-  const { id } = req.params;
-  Post.findByPk(id)
-    .then(post => {
-      if(!post) {
-        return res.sendStatus(404);
-      }
+router.delete('/ticket/:ticketNum', (req, res) => {
+  const { ticketNum } = req.params;
 
-      post.destroy();
-      res.sendStatus(204);
-    });
+  if (ticketNum !== null && uuidv4.isUuid(ticketNum)) {
+    console.log(ticketNum)
+    Post.findOne({ where: { ticketNum: ticketNum } })
+      .then(post => {
+        if (!post) {
+          return res.sendStatus(404);
+        }
+        post.destroy();
+        res.sendStatus(204);
+      });
+  }
+
+  else {
+    return res.status(404).send("Invalid Ticket Number");
+  }
 });
 
 
