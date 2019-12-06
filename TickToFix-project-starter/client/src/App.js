@@ -12,13 +12,13 @@ import PostFormPage from './pages/PostFormPage';
 import ShowPostPage from './pages/ShowPostPage';
 import AboutUsPage from './pages/AboutUsPage';
 import SearchPage from './pages/SearchPage';
-import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown, Form , FormControl, Button} from 'react-bootstrap';
 import './App.css';
 
 
 function Navigation(props) {
   return (
-    <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark"  sticky="top">
+    <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark" sticky="top">
       <Navbar.Brand href="/"> <img src={logo} id="homeLogo" alt="Tick To Fix Logo"></img>TickToFix</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
@@ -33,9 +33,10 @@ function Navigation(props) {
             <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
           </NavDropdown>
         </Nav>
-        <Nav>
-          <Nav.Link href="#deets">More deets</Nav.Link>
-        </Nav>
+        <Form inline>
+          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
+          <Button variant="outline-light">Search</Button>
+        </Form>
       </Navbar.Collapse>
     </Navbar>
     // <nav className="navbar navbar-expand-sm navbar-dark bg-dark shadow mb-3 fixed-top">

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { isUuid } from 'uuidv4';
+
 
 function SelectedPost({ title, content, userName, contactNum, apt, severity, status, createdAt, updatedAt, id, ticketNum, deleteTicket, deleteSuccess, deleteError}) {
     console.log(createdAt)
