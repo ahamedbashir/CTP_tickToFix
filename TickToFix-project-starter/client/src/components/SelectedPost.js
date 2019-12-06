@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { isUuid } from 'uuidv4';
 
-
-function SelectedPost({ title, content, userName, contactNum, apt, severity, status, createdAt, updatedAt, id , deleteTicket}) {
+function SelectedPost({ title, content, userName, contactNum, apt, severity, status, createdAt, updatedAt, id, ticketNum, deleteTicket, deleteSuccess, deleteError}) {
     console.log(createdAt)
     return (
         <div className="col-10 col-md-8 col-lg-7">
@@ -21,7 +21,7 @@ function SelectedPost({ title, content, userName, contactNum, apt, severity, sta
                     <div>Last Updated at {updatedAt}</div>
                 </div>
             </div>
-            <button className="text-right" onClick={() => deleteTicket(id)}>delete</button>
+            <button className="text-right" onClick={() => deleteTicket(ticketNum, deleteSuccess, deleteError)}>delete</button>
             <button>Update Ticket</button>
         </div>
     );
