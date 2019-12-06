@@ -130,7 +130,7 @@ class PostFormPage extends React.Component {
     }
 
     return (
-      <div className="col-10 col-md-8 col-lg-7">
+      <div className="col-10 col-md-8 col-lg-7 mt-5">
         {errorMessage}
         <div className="input-group">
           <input

@@ -19,11 +19,11 @@ import './App.css';
 function Navigation(props) {
   return (
     <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark"  sticky="top">
-      <Navbar.Brand href="posts"> <img src={logo} id="homeLogo" alt="Tick To Fix Logo"></img>TickToFix</Navbar.Brand>
+      <Navbar.Brand href="/"> <img src={logo} id="homeLogo" alt="Tick To Fix Logo"></img>TickToFix</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="/post/new">Create Ticket</Nav.Link>
+          <Nav.Link href="/posts/new">Create Ticket</Nav.Link>
           <Nav.Link href="/about-us">About Us</Nav.Link>
           <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
             <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
