@@ -1,4 +1,4 @@
-exports.DeleteTicket = (ticketNum, deleteSuccess, deleteError) => {
+exports.DeleteTicket = (ticketNum, deleteSuccess = () => { console.log('delete success') }, deleteError = () => {console.log("delete error")}) => {
     let deleteConfirm = window.confirm("Want to Delete This Ticket?");
     if (deleteConfirm)
         fetch("/api/posts/ticket/" + ticketNum, {
