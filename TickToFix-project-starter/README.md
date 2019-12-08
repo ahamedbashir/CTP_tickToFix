@@ -1,5 +1,6 @@
 # Tick To Fix
-### This is a FullStack Project built at CUNYTechPrep by teamTickToFix
+
+This is a FullStack React App built at CUNYTechPrep by teamTickToFix
 
 ## Dev Setup
 
