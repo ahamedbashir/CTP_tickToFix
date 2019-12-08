@@ -12,7 +12,13 @@ import PostFormPage from './pages/PostFormPage';
 import ShowPostPage from './pages/ShowPostPage';
 import AboutUsPage from './pages/AboutUsPage';
 import SearchPage from './pages/SearchPage';
-import { Navbar, Nav, NavDropdown, Form , FormControl, Button} from 'react-bootstrap';
+import Post from './components/Post';
+import SelectedPost from './components/SelectedPost';
+import { Redirect } from 'react-router-dom';
+import { DeleteTicket } from './components/PostFunctions/DeleteTicket';
+// import { searchByTicketNumber, getTickets } from './components/PostFunctions/FetchTicket.js';
+import { isUuid } from 'uuidv4';
+import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
 import './App.css';
 
 
@@ -39,33 +45,86 @@ function Navigation(props) {
         </Form>
       </Navbar.Collapse>
     </Navbar>
-    // <nav className="navbar navbar-expand-sm navbar-dark bg-dark shadow mb-3 fixed-top">
-    //   <Link className="navbar-brand" to="/">
-    //     <img src={logo} id="homeLogo" alt="Tick To Fix Logo"></img>
-    //     TickToFix</Link>
-    //   <ul className="navbar-nav mr-auto">
-    //     <li className="nav-item">
-    //       <NavLink className="nav-link" exact to="/posts/new">
-    //         Create a Ticket
-    //       </NavLink>
-    //     </li>
-    //     <li className="nav-item">
-    //       <NavLink className="nav-link" exact to="/about-us">
-    //         About Us
-    //       </NavLink>
-    //     </li>
-    //     <li className="nav-item">
-    //       <NavLink className="nav-link" exact to = "/search-page">
-    //         Search
-    //       </NavLink>
-    //     </li>
-    //   </ul>
-    // </nav>
   );
 }
 
 
 class App extends React.Component {
+  state = {
+    posts: null,
+    searchedPost: null,
+    loading: true,
+    ticketNum: '',
+    deleted: false
+  }
+
+  componentDidMount() {
+    this.getTickets();
+  };
+
+  ticketNumChanged = (event) => {
+    this.setState({
+      ticketNum: event.target.value
+    });
+  };
+
+  getTicketSuccess = (posts) => {
+    this.setState({
+      loading: false,
+      posts: posts.map((p, ii) => <Post {...p} key={ii} />),
+    });
+  }
+  searchTicketSuccess = (posts) => {
+    this.setState({
+      loading: false,
+      id: posts.id,
+      posts: <SelectedPost {...posts} key={posts.id} deleteTicket={DeleteTicket} deleteSuccess={this.deleteSuccess} deleteError={this.deleteErr} />
+    });
+    
+  }
+  deleteSuccess = () => this.setState({
+    posts: null,
+    ticketNum: null,
+    deleted: true
+  });
+
+  afterDeleteSuccess = () => {
+    this.getTickets();
+    this.setState({ deleted: false });
+  }
+  deleteErr = () => {
+    this.setState({
+      error: true,
+    });
+  };
+
+  getTickets = () => {
+    fetch("/api/posts")
+      .then(res => res.json())
+      .then(posts => {
+        this.setState({
+          loading: false,
+          posts: posts.map((p, ii) => <Post {...p} key={ii} />),
+        });
+      })
+      .catch(err => console.log("API ERROR: ", err));
+  }
+  searchByTicketNumber = () => {
+    if (this.state.ticketNum && isUuid(this.state.ticketNum))
+      fetch("/api/posts/ticketNumber/" + this.state.ticketNum)
+        .then(res => res.json())
+        .then(posts => {
+          console.log(posts.id);
+          this.setState({
+            loading: false,
+            id: posts.id,
+            posts: <SelectedPost {...posts} key={posts.id} deleteTicket={DeleteTicket} deleteSuccess={this.deleteSuccess} deleteError={this.deleteErr} />
+          });
+        })
+        .catch(err => console.log("API ERROR: ", err));
+  }
+
+
   render() {
     return (
       <Router>
@@ -78,7 +137,17 @@ class App extends React.Component {
               <Route path="/posts/:id" component={ShowPostPage} />
               <Route path="/about-us" component={AboutUsPage} />
               <Route path="/search-page" component={SearchPage} />
-              <Route path="/" component={PostsListPage} />
+              {/* <Route path="/" component={PostsListPage} /> */}
+              <Route path="/" render={(props) => <PostsListPage
+                ticketNum={this.state.ticketNum}
+                ticketNumChanged={this.ticketNumChanged}
+                searchPost={this.searchByTicketNumber}
+                getTickets={this.getTickets}
+                posts={this.state.posts}
+                loading={this.state.loading}
+                deleted={this.state.deleted}
+                afterDeleteSuccess={this.afterDeleteSuccess}
+              />} />
             </Switch>
           </div>
         </div>

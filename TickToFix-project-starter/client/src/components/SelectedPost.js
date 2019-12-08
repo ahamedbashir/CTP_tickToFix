@@ -1,16 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap';
+import { DeleteTicket } from './PostFunctions/DeleteTicket';
 
-
-function SelectedPost({ title, content, userName, contactNum, apt, severity, status, createdAt, updatedAt, id, ticketNum, deleteTicket, deleteSuccess, deleteError}) {
+function SelectedPost({ title, content, userName, contactNum, apt, severity, status, createdAt, updatedAt, id, ticketNum, createSuccess, deleteSuccess, deleteError }) {
     console.log(createdAt)
     return (
-        <div className="col-10 col-md-8 col-lg-7">
+        <div className="col-10 col-md-8 col-lg-7 mt-5">
+            <div>
+                {createSuccess ? (<div className="alert alert-success"> "Ticket created and Posted successfully" </div>) : null}
+            </div>
             <div className="card mb-4 shadow">
                 <div className="card-title">
+                    {ticketNum ? <div>Ticket Number # {ticketNum}</div> : null}
                     <div>
                         <Link to={"/posts/" + id}>{title} Reported from {apt}</Link>
-                        
+
                     </div>
                 </div>
                 <div className="card-body card-text">
@@ -21,8 +26,12 @@ function SelectedPost({ title, content, userName, contactNum, apt, severity, sta
                     <div>Last Updated at {updatedAt}</div>
                 </div>
             </div>
-            <button className="text-right" onClick={() => deleteTicket(ticketNum, deleteSuccess, deleteError)}>delete</button>
-            <button>Update Ticket</button>
+
+            <ButtonGroup>
+                <Button variant="outline-success" onClick={() => DeleteTicket(ticketNum, deleteSuccess, deleteError)}>delete</Button>
+                <Button variant="outline-success">Update Ticket</Button>
+                <Button variant="outline-success" onClick={() => window.print()}> Print Ticket</Button>
+            </ButtonGroup>
         </div>
     );
 }
