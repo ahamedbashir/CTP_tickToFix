@@ -36,8 +36,8 @@ function Navigation(props) {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-          {sessionStorage.isAuthenticated ?
-            <Nav.Link href="/posts/new">Create Ticket</Nav.Link> :
+          {sessionStorage.isAuthenticated !== "true" ?
+            <Nav.Link href="/posts/guest/new">Create Ticket</Nav.Link> :
             <Nav.Link href="/posts/new">Create Ticket</Nav.Link> 
           }
           <Nav.Link href="/about-us">About Us</Nav.Link>
@@ -65,7 +65,6 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    console.log('sessionStorage.isAuthenticated', sessionStorage.isAuthenticated)
     this.getTickets();
   };
 

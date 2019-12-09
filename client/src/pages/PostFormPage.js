@@ -164,7 +164,7 @@ class PostFormPage extends React.Component {
     return (
       <div className="container-fluid col-10 col-md-8 col-lg-7 mt-5">
         {errorMessage}
-        <h2>New Ticket Form</h2>
+        <h2>{sessionStorage.isAuthenticated !== "true" ? "New Guest Ticket Form" : "New Ticket Form"}</h2>
         <div className="form-group text-left">
           <div className="form-group">
             <label htmlFor="inputTitle col">Ticket Title</label>
