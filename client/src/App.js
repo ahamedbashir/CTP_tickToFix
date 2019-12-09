@@ -19,30 +19,36 @@ import { DeleteTicket } from './components/PostFunctions/DeleteTicket';
 // import { searchByTicketNumber, getTickets } from './components/PostFunctions/FetchTicket.js';
 import { isUuid } from 'uuidv4';
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
+import SignUpPage from './pages/SignUpPage';
+import LoginPage from './pages/LoginPage';
+import PrivateRoute from './components/PrivateRoute';
+import AuthButton from './components/AuthButton';
 import './App.css';
+import auth from './services/auth';
+
 
 
 function Navigation(props) {
   return (
-    <Navbar collapseOnSelect expand="sm" bg="dark" variant="dark" sticky="top">
+    
+    <Navbar collapseOnSelect expand="md" bg="dark" variant="dark" sticky="top">
       <Navbar.Brand href="/"> <img src={logo} id="homeLogo" alt="Tick To Fix Logo"></img>TickToFix</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="mr-auto">
-          <Nav.Link href="/posts/new">Create Ticket</Nav.Link>
+          {sessionStorage.isAuthenticated ?
+            <Nav.Link href="/posts/new">Create Ticket</Nav.Link> :
+            <Nav.Link href="/posts/new">Create Ticket</Nav.Link> 
+          }
           <Nav.Link href="/about-us">About Us</Nav.Link>
-          <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-            <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-          </NavDropdown>
         </Nav>
         <Form inline>
           <FormControl type="text" placeholder="Search" className="mr-sm-2" />
           <Button variant="outline-light">Search</Button>
         </Form>
+        <Nav>
+          <AuthButton />
+        </Nav>
       </Navbar.Collapse>
     </Navbar>
   );
@@ -52,13 +58,14 @@ function Navigation(props) {
 class App extends React.Component {
   state = {
     posts: null,
-    searchedPost: null,
+    searchedPost: false,
     loading: true,
     ticketNum: '',
-    deleted: false
+    deleted: false,
   }
 
   componentDidMount() {
+    console.log('sessionStorage.isAuthenticated', sessionStorage.isAuthenticated)
     this.getTickets();
   };
 
@@ -70,6 +77,7 @@ class App extends React.Component {
 
   getTicketSuccess = (posts) => {
     this.setState({
+      searchedPost: false,
       loading: false,
       posts: posts.map((p, ii) => <Post {...p} key={ii} />),
     });
@@ -77,13 +85,15 @@ class App extends React.Component {
   searchTicketSuccess = (posts) => {
     this.setState({
       loading: false,
+      searchedPost: true,
       id: posts.id,
       posts: <SelectedPost {...posts} key={posts.id} deleteTicket={DeleteTicket} deleteSuccess={this.deleteSuccess} deleteError={this.deleteErr} />
     });
-    
+
   }
   deleteSuccess = () => this.setState({
     posts: null,
+    searchedPost: false,
     ticketNum: null,
     deleted: true
   });
@@ -123,8 +133,6 @@ class App extends React.Component {
         })
         .catch(err => console.log("API ERROR: ", err));
   }
-
-
   render() {
     return (
       <Router>
@@ -132,7 +140,10 @@ class App extends React.Component {
         <div className="container-fluid text-center">
           <div className="row justify-content-center">
             <Switch>
-              <Route path="/posts/new" component={PostFormPage} />
+              <Route path="/login" component={LoginPage} />
+              <Route path="/signup" component={SignUpPage} />
+              <PrivateRoute path="/posts/new" component={PostFormPage} />
+              <Route path="/posts/guest/new" component={PostFormPage} />
               <Route path="/posts/ticketNumber/:ticketNum" component={ShowPostPage} />
               <Route path="/posts/:id" component={ShowPostPage} />
               <Route path="/about-us" component={AboutUsPage} />
@@ -142,6 +153,7 @@ class App extends React.Component {
                 ticketNum={this.state.ticketNum}
                 ticketNumChanged={this.ticketNumChanged}
                 searchPost={this.searchByTicketNumber}
+                searchedPost={this.state.searchedPost}
                 getTickets={this.getTickets}
                 posts={this.state.posts}
                 loading={this.state.loading}

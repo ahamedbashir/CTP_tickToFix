@@ -100,37 +100,50 @@ class PostsListPage extends React.Component {
   // }
 
   render() {
-    if (this.props.loading) {
-      return <Loading />;
-    }
+    // let posts;
+    // if (this.props.searchedPost) {
+    //   posts = <SelectedPost {...this.props.posts}
+    //     key={this.props.posts.id}
+    //     deleteTicket={this.props.DeleteTicket}
+    //     deleteSuccess={this.props.deleteSuccess}
+    //     deleteError={this.props.deleteErr}
+    //   />
+    // }
+    // else {
+    //   posts = this.props.posts ? this.props.posts.map((p, ii) => <Post {...p} key={ii} />) :
+    //     <div className="alert alert-success"> "There are no tickets" </div>
+    // }
+      if (this.props.loading) {
+        return <Loading />;
+      }
 
-    if (this.props.deleted) {
-      // this.props.getTickets();
-      // this.props.setState({ deleted: false });
-      this.props.afterDeleteSuccess();
-      return <Redirect to={"/posts/"} />
-    }
-    
-    return (
-      <div className="container-fluid text-center">
-        <div className="row justify-content-center">
-          <div className="input-group col-9 col-md-7 col-lg-6 mb-5 mt-5">
-            <input
-              type="text"
-              placeholder="Enter Ticket Number to find and/ update ticket"
-              value={this.props.ticketNum}
-              className="form-control mr-3 rounded"
-              onChange={this.props.ticketNumChanged}
-            />
-            <Button className="btn btn-primary" onClick={this.props.searchPost}>Search Ticket</Button>
+      if (this.props.deleted) {
+        // this.props.getTickets();
+        // this.props.setState({ deleted: false });
+        this.props.afterDeleteSuccess();
+        return <Redirect to={"/posts/"} />
+      }
+
+      return (
+        <div className="container-fluid text-center">
+          <div className="row justify-content-center">
+            <div className="input-group col-9 col-md-7 col-lg-6 mb-5 mt-5">
+              <input
+                type="text"
+                placeholder="Enter Ticket Number to find and/ update ticket"
+                value={this.props.ticketNum}
+                className="form-control mr-3 rounded"
+                onChange={this.props.ticketNumChanged}
+              />
+              <Button className="btn btn-primary" onClick={this.props.searchPost}>Search Ticket</Button>
+            </div>
+          </div>
+          <div className="row justify-content-center">
+            {this.props.posts}
           </div>
         </div>
-        <div className="row justify-content-center">
-          {this.props.posts}
-        </div>
-      </div>
-    );
+      );
+    }
   }
-}
 
-export default PostsListPage;
+  export default PostsListPage;

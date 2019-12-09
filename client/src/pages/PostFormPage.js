@@ -1,10 +1,10 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 import SelectedPost from '../components/SelectedPost';
 import { DeleteTicket } from '../components/PostFunctions/DeleteTicket';
-import Loading from '../components/Loading';
+// import Loading from '../components/Loading';
 import { Button } from 'react-bootstrap';
-import PostsListPage from './PostsListPage';
+// import PostsListPage from './PostsListPage';
 
 class PostFormPage extends React.Component {
   state = {
@@ -167,7 +167,7 @@ class PostFormPage extends React.Component {
         <h2>New Ticket Form</h2>
         <div className="form-group text-left">
           <div className="form-group">
-            <label for="inputTitle col">Ticket Title</label>
+            <label htmlFor="inputTitle col">Ticket Title</label>
             <input
               type="text"
               placeholder="Add Ticket Title"
@@ -178,7 +178,7 @@ class PostFormPage extends React.Component {
             />
           </div>
           <div className="form-group">
-            <label for="textAreaDescription">Ticket Description</label>
+            <label htmlFor="textAreaDescription">Ticket Description</label>
             <textarea
               className="form-control"
               id="textAreaDescription1"
@@ -188,8 +188,8 @@ class PostFormPage extends React.Component {
             />
           </div>
           <div className="form-row">
-            <div class="form-group col-md-4">
-              <label for="inputTel">Name</label>
+            <div className="form-group col-md-4">
+              <label htmlFor="inputName">Name</label>
               <input
                 type="text"
                 placeholder="Enter your name"
@@ -200,7 +200,7 @@ class PostFormPage extends React.Component {
             </div>
 
             <div className="form-group col-md-4">
-              <label for="inputTel">Phone Number</label>
+              <label htmlFor="inputTel">Phone Number</label>
               <input
                 type="text"
                 placeholder="Enter Phone Number"
@@ -212,7 +212,7 @@ class PostFormPage extends React.Component {
             </div>
 
             <div className="form-group col-md-4">
-              <label for="inputApt">Apartment Number</label>
+              <label htmlFor="inputApt">Apartment Number</label>
               <input
                 type="text"
                 placeholder="Enter your Apartment Number"
@@ -224,8 +224,8 @@ class PostFormPage extends React.Component {
           </div>
 
           <div className="form-row">
-            <div class="form-group col-md-4">
-              <label for="inputSeverity">Severity</label>
+            <div className="form-group col-md-4">
+              <label htmlFor="inputSeverity">Severity</label>
               <input
                 type="text"
                 placeholder="Enter Ticket Severity"
@@ -236,19 +236,19 @@ class PostFormPage extends React.Component {
             </div>
 
             <div className="form-group col-md-4">
-              <label for="inputStatus">Status</label>
+              <label htmlFor="inputStatus">Status</label>
               <input
                 type="text"
                 placeholder="Enter Ticket Status"
                 // value={}
-                id="inputTel"
+                id="inputStatus"
                 className="form-control mr-3 rounded"
                 // onChange={}
               />
             </div>
 
             <div className="form-group col-md-4">
-              <label for="inputAppointment">Appointment Status</label>
+              <label htmlFor="inputAppointment">Appointment Status</label>
               <input
                 type="text"
                 placeholder="Enter Appointment Status"
@@ -258,16 +258,6 @@ class PostFormPage extends React.Component {
               />
             </div>
           </div>
-          {/* <div className="form-group">
-            <label for="exampleFormControlSelect1">Example select</label>
-            <select className="form-control" id="exampleFormControlSelect1">
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-          </div> */}
           <Button variant="primary" className="m-*-auto" onClick={this.savePost}>Create Ticket</Button>
         </div>
       </div>
