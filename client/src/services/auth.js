@@ -22,8 +22,8 @@ const auth = {
         return response.json();
       })
       .then((body) => {
-        sessionStorage.setItem('isAuthenticated', true);
-        sessionStorage.setItem('user', body);
+        sessionStorage.setItem('isAuthenticated',true);
+        sessionStorage.setItem('user', JSON.stringify(body));
         this.isAuthenticated = true;
         return body;
       });
@@ -67,7 +67,7 @@ const auth = {
       })
       .then((body) => {
         sessionStorage.setItem('isAuthenticated', true);
-        sessionStorage.setItem('user', body);
+        sessionStorage.setItem('user', JSON.stringify(body));
         this.isAuthenticated = true;
         return body;
       });
