@@ -11,7 +11,7 @@ const AuthButton = withRouter(({ history }) => {
   if (sessionStorage.isAuthenticated !== "true") {
     return <Nav>
       <Nav.Link href="/login">Login</Nav.Link>
-      <Nav.Link href="/signup">Signup</Nav.Link>
+      {/* <Nav.Link href="/signup">Signup</Nav.Link> */}
     </Nav>
 
   }
@@ -22,7 +22,6 @@ const AuthButton = withRouter(({ history }) => {
 
   return (
     <Nav>
-      Welcome!
       <Nav.Link className={classes} onClick={logout}>Logout</Nav.Link>
     </Nav>
   );

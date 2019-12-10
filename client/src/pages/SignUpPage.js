@@ -51,35 +51,10 @@ class SignUpPage extends React.Component {
                 <form className="form-group text-left" onSubmit={this.signUp}>
                     <div className="form-row">
                         <div className="form-group col-sm-6">
-                            <label htmlFor="inputEmail">Email</label>
-                            <input
-                                type="email"
-                                className="form-control mr-6 rounded col"
-                                id="inputEmail"
-                                placeholder="Email"
-                                value={this.state.email}
-                                onChange={this.fieldChanged('email')}
-                            />
-                        </div>
-
-                        <div className="form-group col-sm-6">
-                            <label htmlFor="inputTel">Password</label>
-                            <input
-                                type="password"
-                                className="form-control mr-6 rounded col"
-                                id="inputPassword"
-                                placeholder="Password"
-                                value={this.state.password}
-                                onChange={this.fieldChanged('password')}
-                            />
-                        </div>
-
-                    </div>
-                    <div className="form-row">
-                        <div className="form-group col-sm-6">
                             <label htmlFor="firstName">First Name</label>
                             <input
                                 type="text"
+                                required
                                 className="form-control mr-6 rounded col"
                                 id="firstName"
                                 placeholder="First Name"
@@ -92,6 +67,7 @@ class SignUpPage extends React.Component {
                             <label htmlFor="lastName">Last Name</label>
                             <input
                                 type="text"
+                                required
                                 className="form-control mr-6 rounded col"
                                 id="lastName"
                                 placeholder="Last Name"
@@ -100,6 +76,35 @@ class SignUpPage extends React.Component {
                             />
                         </div>
                     </div>
+                    <div className="form-row">
+                        <div className="form-group col-sm-6">
+                            <label htmlFor="inputEmail">Email</label>
+                            <input
+                                type="email"
+                                required
+                                className="form-control mr-6 rounded col"
+                                id="inputEmail"
+                                placeholder="Email"
+                                value={this.state.email}
+                                onChange={this.fieldChanged('email')}
+                            />
+                        </div>
+
+                        <div className="form-group col-sm-6">
+                            <label htmlFor="inputTel">Password</label>
+                            <input
+                                type="password"
+                                required
+                                className="form-control mr-6 rounded col"
+                                id="inputPassword"
+                                placeholder="Password"
+                                value={this.state.password}
+                                onChange={this.fieldChanged('password')}
+                            />
+                        </div>
+
+                    </div>
+                    
                     <div className="text-center"><Button variant="primary" className="m-*-auto" type="submit">Sign Up</Button></div>
                 </form>
             </div>

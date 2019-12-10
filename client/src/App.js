@@ -66,6 +66,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getTickets();
+    console.log(auth.isAuthenticated)
   };
 
   ticketNumChanged = (event) => {

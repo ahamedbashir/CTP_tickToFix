@@ -4,7 +4,7 @@ import auth from '../services/auth';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route {...rest} render={(props) => (
-    sessionStorage.isAuthenticated === true
+    sessionStorage.isAuthenticated === 'true'
       ? <Component {...props} />
       : <Redirect to={{
           pathname: '/login',

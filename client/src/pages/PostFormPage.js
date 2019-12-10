@@ -243,7 +243,7 @@ class PostFormPage extends React.Component {
           <div className="form-row">
             <div className="form-group col-md-4">
               <label htmlFor="inputSeverity">Severity</label>
-              <select class="form-control" id="inputSeverity" value={this.state.severity} onChange={this.valueChangeHandler('severity')} >
+              <select className="form-control" id="inputSeverity" value={this.state.severity} onChange={this.valueChangeHandler('severity')} >
                 <option value="">SelectTicket Severity</option>
                 <option value="Critical/Major">Critical/Major</option>
                 <option value="Moderate/Medium">Moderate/Medium</option>
@@ -253,7 +253,7 @@ class PostFormPage extends React.Component {
 
             <div className="form-group col-md-4">
               <label htmlFor="inputStatus">Status</label>
-              <select class="form-control" id="inputStatus" value={this.state.status} onChange={this.valueChangeHandler('status')} >
+              <select className="form-control" id="inputStatus" value={this.state.status} onChange={this.valueChangeHandler('status')} >
                 <option value="">Select Ticket Status</option>
                 <option value="Resolved/Closed">Resolved/Closed</option>
                 <option value="Not Solved/Open">Not Solved/Open</option>
