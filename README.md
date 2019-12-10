@@ -15,6 +15,8 @@ Create a user in postgres named `ctp_user` with the password `ctp_pass`:
 ```
 sudo service postgresql start
 ```
+
+```
 createuser -P -s -e ctp_user
 ```
 
