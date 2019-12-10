@@ -1,12 +1,13 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 import auth from '../services/auth';
 
 class LoginPage extends React.Component {
   state = {
     redirectToReferrer: false,
-    failed: false, 
+    failed: false,
     email: "",
     password: "",
   }
@@ -44,29 +45,62 @@ class LoginPage extends React.Component {
     }
 
     return (
-      <form onSubmit={this.login}>
-        <div className="form-row">
-          { err }
-          <input 
-            type="email"
-            className="form-control"
-            name="email"
-            placeholder="Email" 
-            value={this.state.email} 
-            onChange={this.fieldChanged('email')} />
-          <input 
-            type="password"
-            className="form-control"
-            name="password"
-            placeholder="Password" 
-            value={this.state.password} 
-            onChange={this.fieldChanged('password')} />
-          <button 
-            type="submit"
-            className="btn btn-primary ml-auto"
-          >Login</button>
-        </div>
-      </form>
+      // <form onSubmit={this.login}>
+      //   <div className="form-row">
+      //     { err }
+      //     <input 
+      //       type="email"
+      //       className="form-control"
+      //       name="email"
+      //       placeholder="Email" 
+      //       value={this.state.email} 
+      //       onChange={this.fieldChanged('email')} />
+      //     <input 
+      //       type="password"
+      //       className="form-control"
+      //       name="password"
+      //       placeholder="Password" 
+      //       value={this.state.password} 
+      //       onChange={this.fieldChanged('password')} />
+      //     <button 
+      //       type="submit"
+      //       className="btn btn-primary ml-auto"
+      //     >Login</button>
+      //   </div>
+      // </form>
+      <div className="container-fluid col-10 col-md-8 col-lg-7 mt-5">
+        {err}
+        <form className="form-group text-left" onSubmit={this.login}>
+          <div className="form-row">
+            <div className="form-group col-sm-6">
+              <label htmlFor="inputEmail">Email</label>
+              <input
+                type="email"
+                className="form-control mr-6 rounded col"
+                id="inputEmail"
+                placeholder="Email"
+                value={this.state.email}
+                onChange={this.fieldChanged('email')}
+              />
+            </div>
+
+            <div className="form-group col-sm-6">
+              <label htmlFor="inputTel">Password</label>
+              <input
+                type="password"
+                className="form-control mr-6 rounded col"
+                id="inputPassword"
+                placeholder="Password"
+                value={this.state.password}
+                onChange={this.fieldChanged('password')}
+              />
+            </div>
+
+          </div>
+          <div className="text-center"><Button variant="primary" className="m-*-auto" type="submit">Login</Button></div>
+          
+        </form>
+      </div>
     );
   }
 }

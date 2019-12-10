@@ -8,11 +8,14 @@ function SelectedPost({ title, content, userName, contactNum, apt, severity, sta
     return (
         <div className="col-10 col-md-8 col-lg-7 mt-5">
             <div>
-                {createSuccess ? (<div className="alert alert-success"> "Ticket created and Posted successfully" </div>) : null}
+                {createSuccess ? (<div>
+                    <div className="alert alert-success">Ticket created and Posted successfully</div>
+                    <div className="alert alert-success">Your Ticket # {ticketNum}</div>
+                </div>) : null}
             </div>
             <div className="card mb-4 shadow">
                 <div className="card-title">
-                    {ticketNum ? <div>Ticket Number # {ticketNum}</div> : null}
+                    {/* {ticketNum ? <div>Ticket Number # {ticketNum}</div> : null} */}
                     <div>
                         <Link to={"/posts/" + id}>{title} Reported from {apt}</Link>
 

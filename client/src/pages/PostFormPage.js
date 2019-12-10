@@ -18,6 +18,7 @@ class PostFormPage extends React.Component {
     severity: '',
     status: '',
     ticketNum: '',
+    appointmentStatus: '',
     id: null,
     post: null,
     deleted: false
@@ -53,6 +54,13 @@ class PostFormPage extends React.Component {
     });
   }
 
+  valueChangeHandler = (name) => {
+    return (event) => {
+      let { value } = event.target;
+      this.setState({ [name]: value });
+    }
+  }
+
   savePost = (event) => {
     fetch("/api/posts/", {
       method: 'POST',
@@ -60,7 +68,16 @@ class PostFormPage extends React.Component {
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ title: this.state.title, content: this.state.content, userName: this.state.userName, contactNum: this.state.contactNum, apt: this.state.apt })
+      body: JSON.stringify({
+        title: this.state.title,
+        content: this.state.content,
+        userName: this.state.userName,
+        contactNum: this.state.contactNum,
+        apt: this.state.apt,
+        severity: this.state.severity,
+        status: this.state.status,
+        appointmentStatus: this.state.appointmentStatus
+      })
     })
       .then(res => {
         if (res.ok) {
@@ -226,25 +243,21 @@ class PostFormPage extends React.Component {
           <div className="form-row">
             <div className="form-group col-md-4">
               <label htmlFor="inputSeverity">Severity</label>
-              <input
-                type="text"
-                placeholder="Enter Ticket Severity"
-                // value={}
-                className="form-control mr-3 rounded"
-                // onChange={}
-              />
+              <select class="form-control" id="inputSeverity" value={this.state.severity} onChange={this.valueChangeHandler('severity')} >
+                <option value="">SelectTicket Severity</option>
+                <option value="Critical/Major">Critical/Major</option>
+                <option value="Moderate/Medium">Moderate/Medium</option>
+                <option value="Minor/Low">Minor/Low</option>
+              </select>
             </div>
 
             <div className="form-group col-md-4">
               <label htmlFor="inputStatus">Status</label>
-              <input
-                type="text"
-                placeholder="Enter Ticket Status"
-                // value={}
-                id="inputStatus"
-                className="form-control mr-3 rounded"
-                // onChange={}
-              />
+              <select class="form-control" id="inputStatus" value={this.state.status} onChange={this.valueChangeHandler('status')} >
+                <option value="">Select Ticket Status</option>
+                <option value="Resolved/Closed">Resolved/Closed</option>
+                <option value="Not Solved/Open">Not Solved/Open</option>
+              </select>
             </div>
 
             <div className="form-group col-md-4">
@@ -254,11 +267,12 @@ class PostFormPage extends React.Component {
                 placeholder="Enter Appointment Status"
                 // value={}
                 className="form-control mr-3 rounded"
-                // onChange={}
+              // onChange={}
               />
             </div>
           </div>
-          <Button variant="primary" className="m-*-auto" onClick={this.savePost}>Create Ticket</Button>
+          <div className="text-center"><Button variant="primary" className="m-*-auto" onClick={this.savePost}>Submit Ticket</Button></div>
+          
         </div>
       </div>
     );

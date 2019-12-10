@@ -43,8 +43,8 @@ function Navigation(props) {
           <Nav.Link href="/about-us">About Us</Nav.Link>
         </Nav>
         <Form inline>
-          <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-          <Button variant="outline-light">Search</Button>
+          <FormControl type="text" placeholder="Find Ticket" className="mr-sm-4" />
+          {/* <Button variant="outline-light">Search</Button> */}
         </Form>
         <Nav>
           <AuthButton />
