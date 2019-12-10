@@ -12,6 +12,9 @@ Create a user in postgres named `ctp_user` with the password `ctp_pass`:
 
 > This only needs to be done one time on your machine
 > You can create additional users if you want to.
+```
+sudo service postgresql start
+```
 
 ```
 createuser -P -s -e ctp_user
@@ -37,6 +40,8 @@ For local development you will need two terminals open, one for the api-backend 
 # api-backend terminal 1
 cp .env.example .env
 npm install
+## start the postgresql service
+sudo service postgresql start
 npm run dev
 ```
 
