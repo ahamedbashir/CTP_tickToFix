@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-import { Button } from 'react-bootstrap';
+import { Button , Nav} from 'react-bootstrap';
 import auth from '../services/auth';
 
 class SignUpPage extends React.Component {
@@ -104,9 +104,12 @@ class SignUpPage extends React.Component {
                         </div>
 
                     </div>
-                    
+
                     <div className="text-center"><Button variant="primary" className="m-*-auto" type="submit">Sign Up</Button></div>
                 </form>
+                <div className="tex-center mt-5">
+                    <div className="h4">Already have an account? <Nav.Link className="" href="/login">Login</Nav.Link></div>
+                </div>
             </div>
         );
     }
