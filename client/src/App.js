@@ -43,7 +43,7 @@ function Navigation(props) {
           <Nav.Link href="/about-us">About Us</Nav.Link>
         </Nav>
         <Form inline>
-          <FormControl type="text" placeholder="Find Ticket" className="mr-sm-4" />
+          <FormControl type="text" placeholder="Find Ticket" className="mr-sm-4" onChange={props.searchAllTicket}/>
           {/* <Button variant="outline-light">Search</Button> */}
         </Form>
         <Nav>
@@ -62,6 +62,7 @@ class App extends React.Component {
     loading: true,
     ticketNum: '',
     deleted: false,
+    allTickets: ''
   }
 
   componentDidMount() {
@@ -80,6 +81,7 @@ class App extends React.Component {
       searchedPost: false,
       loading: false,
       posts: posts.map((p, ii) => <Post {...p} key={ii} />),
+      allTickets: posts
     });
   }
   searchTicketSuccess = (posts) => {
@@ -115,6 +117,7 @@ class App extends React.Component {
         this.setState({
           loading: false,
           posts: posts.map((p, ii) => <Post {...p} key={ii} />),
+          allTickets: posts
         });
       })
       .catch(err => console.log("API ERROR: ", err));
@@ -124,7 +127,7 @@ class App extends React.Component {
       fetch("/api/posts/ticketNumber/" + this.state.ticketNum)
         .then(res => res.json())
         .then(posts => {
-          console.log(posts.id);
+          console.log('posts', posts);
           this.setState({
             loading: false,
             id: posts.id,
@@ -132,11 +135,35 @@ class App extends React.Component {
           });
         })
         .catch(err => console.log("API ERROR: ", err));
+    else {
+      this.setState({
+        posts: <div>
+          <div className="alert alert-danger">Invalid Ticket Number</div>
+          <Nav.Link href="/">View All Tickets</Nav.Link>
+        </div>
+      })
+    }
+  };
+
+  searchAllTicket = (event) => {
+    let searchParam = event.target.value.toLocaleLowerCase();
+    let posts = [];
+    this.state.allTickets.map(obj => {
+      for(let key in obj) {
+        let str = String(obj[key]).toLocaleLowerCase();
+        if (str && str.includes(searchParam)) {
+          posts.push(obj);
+          return;
+        }
+      };
+    })
+    console.log(posts);
+
   }
   render() {
     return (
       <Router>
-        <Navigation />
+        <Navigation searchAllTicket={this.searchAllTicket}/>
         <div className="container-fluid text-center">
           <div className="row justify-content-center">
             <Switch>

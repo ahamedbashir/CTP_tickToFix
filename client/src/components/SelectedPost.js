@@ -28,13 +28,14 @@ function SelectedPost({ title, content, userName, contactNum, apt, severity, sta
                     <div>Reported at {createdAt}</div>
                     <div>Last Updated at {updatedAt}</div>
                 </div>
+                <ButtonGroup>
+                    <Button variant="outline-success" onClick={() => DeleteTicket(ticketNum, deleteSuccess, deleteError)}>delete</Button>
+                    <Button variant="outline-success">Update Ticket</Button>
+                    <Button variant="outline-success" onClick={() => window.print()}> Print Ticket</Button>
+                </ButtonGroup>
             </div>
 
-            <ButtonGroup>
-                <Button variant="outline-success" onClick={() => DeleteTicket(ticketNum, deleteSuccess, deleteError)}>delete</Button>
-                <Button variant="outline-success">Update Ticket</Button>
-                <Button variant="outline-success" onClick={() => window.print()}> Print Ticket</Button>
-            </ButtonGroup>
+
         </div>
     );
 }
