@@ -1,7 +1,7 @@
 exports.DeleteTicket = (ticketNum, deleteSuccess = () => { console.log('delete success') }, deleteError = () => {console.log("delete error")}) => {
     let deleteConfirm = window.confirm("Want to Delete This Ticket?");
     if (deleteConfirm)
-        fetch("/api/posts/ticket/" + ticketNum, {
+        fetch("/api/posts/ticketNumber/" + ticketNum, {
             method: 'DELETE',
             credentials: 'include',
             headers: {

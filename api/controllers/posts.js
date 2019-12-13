@@ -18,15 +18,15 @@ const uuidv4 = require('uuidv4')
 
 
 router.get('/', (req, res) => {
-  Post.findAll({ attributes: ['title', 'content', 'apt', 'userName', 'contactNum', 'severity', 'status', 'createdAt', 'updatedAt', 'id'] })
+  Post.findAll({ attributes: ['title', 'content', 'apt', 'userName', 'contactNum', 'severity', 'status','appointmentStatus', 'createdAt', 'updatedAt', 'id'] })
     .then(posts => res.json(posts));
 });
 
 
 router.post('/', (req, res) => {
-  let { title, content, userName, contactNum, apt, severity, status } = req.body;
+  let { title, content, userName, contactNum, apt, severity, status, appointmentStatus } = req.body;
 
-  Post.create({ title, content, userName, contactNum, apt, severity, status })
+  Post.create({ title, content, userName, contactNum, apt, severity, status, appointmentStatus })
     .then(post => {
       res.status(201).json(post);
     })
@@ -60,50 +60,60 @@ router.get('/ticketNumber/:ticketNum', (req, res) => {
 })
 
 
-router.put('/:id', (req, res) => {
-  const { id } = req.params;
-  let { title, content, userName, contactNum, apt, severity, status } = req.body;
+router.put('/ticketNumber/:ticketNum', (req, res) => {
+  const {ticketNum } = req.params;
+  let { title, content, userName, contactNum, apt, severity, status, appointmentStatus } = req.body;
 
-  Post.findByPk(id)
-    .then(post => {
-      if (!post) {
-        return res.sendStatus(404);
-      }
+  if (ticketNum !== null && uuidv4.isUuid(ticketNum)) {
+    console.log(ticketNum)
+    Post.findOne({ where: { ticketNum: ticketNum } })
+      .then(post => {
+        if (!post) {
+          return res.sendStatus(404);
+        }
+  
+        if (title) {
+          post.title = title;
+        }
+        if (content) {
+          post.content = content;
+        }
+        if (userName) {
+          post.userName = userName;
+        }
+        if (contactNum) {
+          post.contactNum = contactNum;
+        }
+        if (apt) {
+          post.apt = apt;
+        }
+        if (severity) {
+          post.severity = severity;
+        }
+        if (status) {
+          post.status = status;
+        }
+        if (appointmentStatus) {
+          post.appointmentStatus = appointmentStatus;
+        }
+  
+        post.save()
+          .then(post => {
+            res.json(post);
+          })
+          .catch(err => {
+            res.status(400).json(err);
+          });
+      });
+  }
 
-      if (title) {
-        post.title = title;
-      }
-      if (content) {
-        post.content = content;
-      }
-      if (userName) {
-        post.userName = userName;
-      }
-      if (contactNum) {
-        post.contactNum = contactNum;
-      }
-      if (apt) {
-        post.apt = apt;
-      }
-      if (severity) {
-        post.severity = severity;
-      }
-      if (status) {
-        post.status = status;
-      }
-
-      post.save()
-        .then(post => {
-          res.json(post);
-        })
-        .catch(err => {
-          res.status(400).json(err);
-        });
-    });
+  else {
+    return res.status(404).send("Failed To Update Ticket");
+  }
 });
 
 
-router.delete('/ticket/:ticketNum', (req, res) => {
+router.delete('/ticketNumber/:ticketNum', (req, res) => {
   const { ticketNum } = req.params;
 
   if (ticketNum !== null && uuidv4.isUuid(ticketNum)) {

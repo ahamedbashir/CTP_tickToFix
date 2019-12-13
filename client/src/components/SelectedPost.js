@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Button, ButtonGroup } from 'react-bootstrap';
 import { DeleteTicket } from './PostFunctions/DeleteTicket';
 
-function SelectedPost({ title, content, userName, contactNum, apt, severity, status, createdAt, updatedAt, id, ticketNum, createSuccess, deleteSuccess, deleteError }) {
+function SelectedPost({ title, content, userName, contactNum, apt, severity, status, appointmentStatus, createdAt, updatedAt, id, ticketNum, createSuccess, deleteSuccess, deleteError }) {
     console.log(ticketNum)
     return (
         <div className="col-10 col-md-8 col-lg-7 mt-5">
@@ -14,27 +14,31 @@ function SelectedPost({ title, content, userName, contactNum, apt, severity, sta
                 </div>) : null}
             </div>
             <div className="card mb-4 shadow">
-                <div className="card-title">
-                    {/* {ticketNum ? <div>Ticket Number # {ticketNum}</div> : null} */}
-                    <div>
-                        <Link to={"/posts/" + id}>{title} Reported from {apt}</Link>
-
-                    </div>
+                <div className="card-title card-header">
+                    <Link to={"/posts/" + id}><em> {title}</em> Reported from Apartment <em>{apt}</em>
+                    </Link>
                 </div>
                 <div className="card-body card-text">
-                    {content}{severity} {status}
+                    {content}
                 </div>
                 <div className="card-footer small text-muted text-right">
                     <div>Reported at {createdAt}</div>
                     <div>Last Updated at {updatedAt}</div>
                 </div>
-                <ButtonGroup>
-                    <Button variant="outline-success" onClick={() => DeleteTicket(ticketNum, deleteSuccess, deleteError)}>delete</Button>
-                    <Button variant="outline-success">Update Ticket</Button>
-                    <Button variant="outline-success" onClick={() => window.print()}> Print Ticket</Button>
-                </ButtonGroup>
-            </div>
+                <div className="container card bg-info text-white">
+                    <div class="row">
+                        <div class="col-sm">Severity: {severity}</div>
+                        <div class="col-sm">Ticket Status: {status}</div>
+                        <div class="col-sm">Appointment Status: {appointmentStatus}</div>
+                    </div>
+                </div>
 
+            </div>
+            <ButtonGroup>
+                <Button variant="outline-success" onClick={() => DeleteTicket(ticketNum, deleteSuccess, deleteError)}>Delete Ticket</Button>
+                <Button variant="outline-success">Update Ticket</Button>
+                <Button variant="outline-success" onClick={() => window.print()}> Print Ticket</Button>
+            </ButtonGroup>
 
         </div>
     );

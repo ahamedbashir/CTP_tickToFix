@@ -53,6 +53,12 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       }
     },
+    appointmentStatus: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: true,
+      }
+    },
     ticketNum: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV4,
