@@ -252,11 +252,12 @@ class PostFormPage extends React.Component {
             </div>
 
             <div className="form-group col-md-4">
-              <label htmlFor="inputStatus">Status</label>
+              <label htmlFor="inputStatus">Ticket Status</label>
               <select className="form-control" id="inputStatus" value={this.state.status} onChange={this.valueChangeHandler('status')} >
-                <option value="">Select Ticket Status</option>
-                <option value="Resolved/Closed">Resolved/Closed</option>
+                <option value="Not Solved/Open">Select Ticket Status</option>
                 <option value="Not Solved/Open">Not Solved/Open</option>
+                <option value="Resolved/Closed">Resolved/Closed</option>
+                
               </select>
             </div>
 
