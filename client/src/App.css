@@ -26,3 +26,15 @@
 #homeLogo {
   height: 2rem;
 }
+
+.buttonInside{
+  position:relative;
+}
+
+.clearButton{
+  position:absolute;
+  right: 8px;
+  font-weight:bold;
+  color: black;
+  /* padding:2px; */
+}

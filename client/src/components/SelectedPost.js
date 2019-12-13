@@ -4,7 +4,7 @@ import { Button, ButtonGroup } from 'react-bootstrap';
 import { DeleteTicket } from './PostFunctions/DeleteTicket';
 
 function SelectedPost({ title, content, userName, contactNum, apt, severity, status, createdAt, updatedAt, id, ticketNum, createSuccess, deleteSuccess, deleteError }) {
-    console.log(createdAt)
+    console.log(ticketNum)
     return (
         <div className="col-10 col-md-8 col-lg-7 mt-5">
             <div>
