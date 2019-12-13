@@ -107,8 +107,19 @@ class App extends React.Component {
 
   afterDeleteSuccess = () => {
     this.getTickets();
-    this.setState({ deleted: false });
-  }
+    if (this.state.deleted) {
+      let post = this.state.allTickets.map((p, ii) => <Post {...p} key={ii} />);
+      post.unshift(<div className="col-10 col-md-8 col-lg-7 mt-5">
+        <div className="card mb-4 shadow alert alert-success">"Ticket deleted Successfully!"</div>
+      </div>)
+      this.setState({
+        ticketNumError: true,
+        posts: post,
+        deleted: false
+      })
+    }
+  };
+
   deleteErr = () => {
     this.setState({
       error: true,
@@ -145,14 +156,19 @@ class App extends React.Component {
         })
         .catch(err => console.log("API ERROR: ", err));
     else {
+      let post = this.state.allTickets.map((p, ii) => <Post {...p} key={ii} />);
+      post.unshift(<div className="col-10 col-md-8 col-lg-7 mt-5">
+        <div className="card mb-4 shadow alert alert-danger">"Invalid Ticket Number"</div>
+      </div>)
       this.setState({
-        ticketNumError: true
-     })
+        ticketNumError: true,
+        posts: post
+      })
     }
   };
 
   searchAllTicket = (searchParam) => {
-    this.setState({ticketNum:''})
+    this.setState({ ticketNum: '' })
     searchParam = searchParam.toLocaleLowerCase();
     let posts = [];
     this.state.allTickets.map(obj => {
@@ -171,7 +187,7 @@ class App extends React.Component {
         </div>
       });
     } else {
-      this.setState({ posts: posts.map((p, ii) => <Post {...p} key={ii} />),ticketNumError: false });
+      this.setState({ posts: posts.map((p, ii) => <Post {...p} key={ii} />), ticketNumError: false });
     }
 
     console.log(posts);
@@ -202,7 +218,7 @@ class App extends React.Component {
                 posts={this.state.posts}
                 loading={this.state.loading}
                 deleted={this.state.deleted}
-                ticketNumError = {this.state.ticketNumError}
+                ticketNumError={this.state.ticketNumError}
                 afterDeleteSuccess={this.afterDeleteSuccess} />}
               />
             </Switch>

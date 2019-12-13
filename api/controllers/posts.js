@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../models');
 const passport = require('../middlewares/authentication');
 const { Post } = db;
-
+const uuidv4 = require('uuidv4')
 // This is a simple example for providing basic CRUD routes for
 // a resource/model. It provides the following:
 //    GET    /posts

@@ -19,10 +19,10 @@ class PostsListPage extends React.Component {
 
 
   render() {
-    let errorMsg = this.props.ticketNumError ?
-      <div className="col-10 col-md-8 col-lg-7 mt-5">
-        <div className="card mb-4 shadow alert alert-danger">"Invalid Ticket Number"</div>
-      </div>: null;
+    // let errorMsg = this.props.ticketNumError ?
+    //   <div className="col-10 col-md-8 col-lg-7 mt-5">
+    //     <div className="card mb-4 shadow alert alert-danger">"Invalid Ticket Number"</div>
+    //   </div>: null;
     if (this.props.loading) {
       return <Loading />;
     }
@@ -31,7 +31,7 @@ class PostsListPage extends React.Component {
       // this.props.getTickets();
       // this.props.setState({ deleted: false });
       this.props.afterDeleteSuccess();
-      return <Redirect to={"/posts/"} />
+      // return <Redirect to={"/posts/"} />
     }
 
     return (
@@ -53,7 +53,7 @@ class PostsListPage extends React.Component {
           </div>
         </div>
         <div className="row justify-content-center">
-          {errorMsg}
+          {/* {errorMsg} */}
           {this.props.posts}
         </div>
       </div>
