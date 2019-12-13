@@ -27,14 +27,16 @@
   height: 2rem;
 }
 
-.buttonInside{
-  position:relative;
+#searchParam{
+  padding-left: 10px;
+  height: 1.33em;
+  border-top-left-radius: 4px;
+  border-bottom-left-radius: 4px;
+  border:none;outline:none;
 }
-
 .clearButton{
-  position:absolute;
-  right: 8px;
-  font-weight:bold;
-  color: black;
-  /* padding:2px; */
-}
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border:none;outline:none;
+  padding-right: 4px;
+} 

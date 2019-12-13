@@ -25,7 +25,8 @@ import PrivateRoute from './components/PrivateRoute';
 import AuthButton from './components/AuthButton';
 import './App.css';
 import auth from './services/auth';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 
 function Navigation(props) {
@@ -42,9 +43,9 @@ function Navigation(props) {
           }
           <Nav.Link href="/about-us">About Us</Nav.Link>
         </Nav>
-        <Form inline className="buttonInside">
-            <input type="text" id="searchParam" placeholder="Find Tickets" className="searchField mr-sm-2 form-control" onChange={(event) => props.searchAllTicket(event.target.value)} />
-            <Button className = "clearButton " variant="outline-secondary" onClick={() => { document.getElementById('searchParam').value = ''; props.searchAllTicket('') }}>X</Button>
+        <Form inline>
+          <input type="text" id="searchParam" placeholder="Find Tickets" className="" onChange={(event) => props.searchAllTicket(event.target.value)} />
+          <FontAwesomeIcon icon={faTimes} className="fa-lg bg-white mr-sm-5 clearButton" variant="" onClick={() => { document.getElementById('searchParam').value = ''; props.searchAllTicket('') }} />
         </Form>
         <Nav>
           <AuthButton />
@@ -63,7 +64,8 @@ class App extends React.Component {
     ticketNum: '',
     deleted: false,
     allTickets: '',
-    searchParam: ''
+    searchParam: '',
+    ticketNumError: false
   }
 
   componentDidMount() {
@@ -71,9 +73,9 @@ class App extends React.Component {
     console.log(auth.isAuthenticated)
   };
 
-  ticketNumChanged = (event) => {
+  ticketNumChanged = (value) => {
     this.setState({
-      ticketNum: event.target.value
+      ticketNum: value
     });
   };
 
@@ -82,7 +84,8 @@ class App extends React.Component {
       searchedPost: false,
       loading: false,
       posts: posts.map((p, ii) => <Post {...p} key={ii} />),
-      allTickets: posts
+      allTickets: posts,
+      ticketNumError: false
     });
   }
   searchTicketSuccess = (posts) => {
@@ -90,6 +93,7 @@ class App extends React.Component {
       loading: false,
       searchedPost: true,
       id: posts.id,
+      ticketNumError: false,
       posts: <SelectedPost {...posts} key={posts.id} deleteTicket={DeleteTicket} deleteSuccess={this.deleteSuccess} deleteError={this.deleteErr} />
     });
 
@@ -98,7 +102,7 @@ class App extends React.Component {
     posts: null,
     searchedPost: false,
     ticketNum: null,
-    deleted: true
+    deleted: true,
   });
 
   afterDeleteSuccess = () => {
@@ -118,12 +122,15 @@ class App extends React.Component {
         this.setState({
           loading: false,
           posts: posts.map((p, ii) => <Post {...p} key={ii} />),
-          allTickets: posts
+          allTickets: posts,
+          ticketNumError: false
         });
       })
       .catch(err => console.log("API ERROR: ", err));
   }
   searchByTicketNumber = () => {
+    document.getElementById('searchParam').value = '';
+    this.searchAllTicket('');
     if (this.state.ticketNum && isUuid(this.state.ticketNum))
       fetch("/api/posts/ticketNumber/" + this.state.ticketNum)
         .then(res => res.json())
@@ -132,22 +139,20 @@ class App extends React.Component {
           this.setState({
             loading: false,
             id: posts.id,
+            ticketNumError: false,
             posts: <SelectedPost {...posts} key={posts.id} deleteTicket={DeleteTicket} deleteSuccess={this.deleteSuccess} deleteError={this.deleteErr} />
           });
         })
         .catch(err => console.log("API ERROR: ", err));
     else {
       this.setState({
-        posts: <div className="card alert alert-danger col-6">
-          <div className="h4 card-title">Invalid Ticket Number
-          </div>
-          <Button variant="info" className="mt-5" href="/">Click to View All Tickets</Button>
-        </div>
-      })
+        ticketNumError: true
+     })
     }
   };
 
   searchAllTicket = (searchParam) => {
+    this.setState({ticketNum:''})
     searchParam = searchParam.toLocaleLowerCase();
     let posts = [];
     this.state.allTickets.map(obj => {
@@ -161,12 +166,12 @@ class App extends React.Component {
     })
     if (posts.length === 0) {
       this.setState({
-        posts: <div className="alert alert-danger">
-          No Ticket found
+        posts: <div className="col-10 col-md-8 col-lg-7 mt-5">
+          <div className="card mb-4 shadow alert alert-danger">"No Ticket Found"</div>
         </div>
       });
     } else {
-      this.setState({ posts: posts.map((p, ii) => <Post {...p} key={ii} />) });
+      this.setState({ posts: posts.map((p, ii) => <Post {...p} key={ii} />),ticketNumError: false });
     }
 
     console.log(posts);
@@ -197,6 +202,7 @@ class App extends React.Component {
                 posts={this.state.posts}
                 loading={this.state.loading}
                 deleted={this.state.deleted}
+                ticketNumError = {this.state.ticketNumError}
                 afterDeleteSuccess={this.afterDeleteSuccess} />}
               />
             </Switch>
